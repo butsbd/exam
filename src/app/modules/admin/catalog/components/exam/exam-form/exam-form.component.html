@@ -1,0 +1,139 @@
+<h2 mat-dialog-title>{{ formTitle }}</h2>
+<form [formGroup]="examForm" (ngSubmit)="onSubmit()">
+  <mat-dialog-content class="mat-typography">
+    <input mat type="hidden" formControlName="id" />
+    <input mat type="hidden" formControlName="createdBy" />
+    <input mat type="hidden" formControlName="updatedBy" />
+    
+     <mat-form-field appearance="outline">
+      <mat-label>Exam Title </mat-label>
+      <mat-select class="form-select" formControlName="examTitleId">
+        <mat-option *ngFor="let examTitle of examTitles" [value]="examTitle.id">
+          {{ examTitle?.title }}
+        </mat-option>
+      </mat-select>
+      <mat-error> Please select a valid Exam Title </mat-error>
+    </mat-form-field>
+    <p></p>
+     <div [hidden]="!isEditForm" >
+    <mat-form-field appearance="outline">
+      <mat-label>Code</mat-label>
+      <input
+        matInput
+        autocomplete="off"
+        placeholder="Code"
+        formControlName="code"
+        readonly
+      />
+      <mat-error> Please provide a valid Code </mat-error>
+    </mat-form-field>
+    </div>
+    <p></p>
+    <mat-form-field appearance="outline">
+      <mat-label>Set</mat-label>
+      <input
+        matInput
+        autocomplete="off"
+        placeholder="Set"
+        formControlName="examCode"
+        required
+      />
+      <mat-error> Please provide a valid Set </mat-error>
+    </mat-form-field>
+    <p></p>
+   
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Duration</mat-label>
+      <input
+        matInput
+        autocomplete="off"
+        placeholder="Duration"
+        formControlName="duration"
+        required
+      />
+      <mat-error> Please provide a valid Duration </mat-error>
+    </mat-form-field>
+    <p></p>
+
+    <mat-form-field appearance="outline">
+      <mat-label>No Of Questions</mat-label>
+      <input
+        matInput
+        autocomplete="off"
+        placeholder="No Of Questions"
+        formControlName="numberOfQuestions"
+        required
+      />
+      <mat-error> Please provide a valid No of Questions </mat-error>
+    </mat-form-field>
+    <p></p>
+    <mat-form-field appearance="outline">
+      <mat-label>Round No</mat-label>
+      <mat-select class="form-select" formControlName="roundNo">
+       <mat-option *ngFor="let round of rounds" [value]="round.name">
+          {{round.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error> Please select a valid Round </mat-error>
+    </mat-form-field>
+    <p></p>
+     <div  >
+    <mat-form-field appearance="outline">
+      <mat-label>Exam Date & Time</mat-label>
+  <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date & time" formControlName="examDateTime" readonly>
+    
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+    <ngx-mat-datetime-picker #picker  [showSeconds]="true" [enableMeridian]="true"></ngx-mat-datetime-picker>
+
+
+      <!-- <input
+        matInput
+        [matDatepicker]="datepicker"
+        datePickerFormat="YYYY/MM/DD"
+        formControlName="examDateTime"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="datepicker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #datepicker></mat-datepicker> -->
+    </mat-form-field>
+</div>
+    <p></p>
+    <!-- [hidden]="!isEditForm" -->
+    <div [hidden]="!isEditForm" >
+      <mat-form-field appearance="outline">
+        <mat-label>Next Round</mat-label>
+        
+        <mat-select class="form-select" formControlName="nextRoundExamId">
+        <mat-option *ngFor="let exam of nextRoundExams" [value]="exam.id">
+          {{ exam?.examDescription }}
+        </mat-option>
+      </mat-select>
+        <mat-error> Please select a valid Next Round </mat-error>
+      </mat-form-field>
+    </div>
+    <p></p>
+    
+      <div [hidden]="!isEditForm" >
+     
+       <mat-checkbox formControlName="published">Is Published?</mat-checkbox>
+       
+    </div>
+    <p></p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      cdkFocusInitial
+      color="primary"
+      [disabled]="!examForm.dirty || !examForm.valid"
+      type="submit"
+    >
+      Save
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,54 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Select Exam</mat-label>
+        <mat-select class="form-select" formControlName="examId">
+          <mat-option *ngFor="let exam of exams" [value]="exam.id">
+            {{ exam?.examDescription }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Question Title</mat-label>
+        <input matInput formControlName="label" />
+      </mat-form-field>
+
+      <div
+        formArrayName="choices"
+        *ngFor="
+          let item of questionForm.get('choices')['controls'];
+          let i = index
+        "
+      >
+        <div [formGroupName]="i">
+          <mat-grid-list cols="4" rowHeight="50px" gutterSize="5px">
+            <mat-grid-tile colspan="3">
+              <mat-form-field appearance="outline">
+                <mat-label>Option {{ i + 1 }}</mat-label>
+                <input matInput formControlName="name" />
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile colspan="1">
+              <mat-checkbox formControlName="correct">Is Correct?</mat-checkbox>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+        <!-- Exposed item name:
+        {{ questionForm.controls.choices.controls[i].controls.name.value }} -->
+      </div>
+      <!-- <button type="button" (click)="addItem()">Add Item</button> -->
+
+      <button
+        mat-raised-button
+        color="accent"
+        type="submit"
+        [disabled]="!questionForm.valid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

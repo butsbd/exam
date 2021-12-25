@@ -1,0 +1,34 @@
+<app-exam-toolbar></app-exam-toolbar>
+ <div style="padding-top: 50px;"><h1 align="center">Your Enrolled Exams</h1></div> 
+<mat-card class="welcome-container">
+  
+    
+    <div class="flex-container" fxLayout="row" fxLayout.xs="column">
+        <div class="row">
+            <div *ngFor="let enrolledExam of enrolledExams" class="col-md-6 col-xl-6 u-mr-auto">
+        <mat-card  class="quiz-card">
+           
+            <mat-card-title align="center">
+                <h1 class="md-display-3">{{enrolledExam.exam.code}} {{enrolledExam.exam.title}} {{enrolledExam.exam.roundNo}}</h1>
+                <h3 class="md-display-2">Duration : {{enrolledExam.exam.duration}} Minutes</h3>
+                <h3 class="md-display-2">Total Questions : {{enrolledExam.exam.numberOfQuestions}}</h3>
+                 <h2 class="md-display-2">Start: {{getExamStartDateTime(enrolledExam.exam.examDateTime)}}</h2>
+                <!-- <h1 class="md-display-3">{{enrolledExam.exam.examDateTime}}</h1> -->
+            </mat-card-title>
+            <mat-card-content align="center">
+             <app-exam-countdown-timer examDateTime="{{enrolledExam.exam.examDateTime}}" exam="{{enrolledExam}}" ></app-exam-countdown-timer>
+            </mat-card-content>
+            <!-- [routerLink]="['/exam/startExam',enrolledExam.exam.id]" -->
+           <div [hidden]="enrolledExam.finished">
+             <div class="center" >
+                <a mat-raised-button  (click)="startExam(enrolledExam.exam)" color="accent" class="btn quiz-link-btn" [disabled]="enableExamStartBtn(enrolledExam.exam.examDateTime)">Start Exam</a>
+            </div>
+           </div>
+          
+
+        </mat-card>
+            </div>
+        </div>
+    </div>
+    
+</mat-card>

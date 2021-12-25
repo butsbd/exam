@@ -1,0 +1,35 @@
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource.item1" >
+    <!-- Position Column -->
+    <ng-container matColumnDef="label">
+      <mat-header-cell *matHeaderCellDef > No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.label}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="examId">
+      <mat-header-cell *matHeaderCellDef >
+        examId
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.examId}} </mat-cell>
+    </ng-container>
+
+ 
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: displayedColumns; let index = index"
+      (click)="insertComponent(index)"
+      #tableRow
+    >
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator *ngIf="dataSource.item2 > 0" [length]="dataSource.item2" [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 25, 100]" (page)="pageChanged($event)" showFirstLastButtons>
+</mat-paginator>
+</div>
+
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->

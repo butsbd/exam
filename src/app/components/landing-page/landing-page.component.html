@@ -1,0 +1,100 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <a mat-button aria-label="fluentpos">
+      <img
+        class="angular-logo"
+        src="/assets/angular-white-transparent.svg"
+        alt="Angular Logo White"
+      />
+      <span style="font-weight: lighter; font-size: larger" translate
+        >site.title</span
+      >
+    </a>
+    <span class="nav-spacer"></span>
+
+    <a mat-icon-button (click)="toggleDarkMode()" class="d-none d-sm-block">
+      <mat-icon>{{ darkModeIcon }}</mat-icon>
+    </a>
+    <mat-divider vertical style="height: 50%; margin: 10px"></mat-divider>
+  
+    <a
+     *ngIf="!authService.isAuthenticated"
+      mat-raised-button
+      color="warn"
+      style="margin-right: 5px"
+      class="d-none d-sm-block"
+    >
+      <span style="font-weight: lighter; font-size: small"
+        ><span style="margin-right: 10px" class="fas fa-info"></span>Candidate Signup</span
+      >
+    </a>
+    <a
+     *ngIf="!authService.isAuthenticated"
+      mat-raised-button
+      color="warn"
+      style="margin-right: 5px"
+      class="d-none d-sm-block"
+      [routerLink]="['/login']"
+      [queryParams]="{returnUrl: 'portal'}"
+    >
+      <span style="font-weight: lighter; font-size: small"
+        ><span style="margin-right: 10px" class="fas fa-info"></span>Login</span
+      >
+    </a>
+    <button *ngIf="authService.isAuthenticated" mat-raised-button color="accent" [matMenuTriggerFor]="userMenu">
+      <span
+        ><span style="margin-right: 10px" class="fas fa-caret-down"></span
+        >{{ fullName }}</span
+      >
+    </button>
+
+    <mat-menu #userMenu="matMenu" style="padding-top: 0 !important">
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="openLogoutDialog()" translate>
+        userCard.logout
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+<p></p>
+<p></p>
+<p></p>
+<h1 align="center">Upcoming Exams</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-sm" *ngFor="let exam of publishedExams">
+      <mat-card class="example-card">
+        <mat-card-title align="center">{{exam.code}} {{exam.title}} {{exam.roundNo}}</mat-card-title>
+        <mat-card-subtitle align="center">Start: {{getExamStartDateTime(exam.examDateTime)}}</mat-card-subtitle>
+        <mat-card-content align="center">
+          <p>Duration : {{exam.duration}} Minutes</p>
+          <p>
+           Total Questions : {{exam.numberOfQuestions}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions align="center">
+            <button  mat-raised-button (click)="enroll(exam.id)" color="accent">Enroll Now</button> 
+        </mat-card-actions>
+      </mat-card>
+    </div>
+   
+  </div>
+</div>
+<div id="outerContainer">
+  <div class="pdf-container">
+    <pdf-viewer
+      [src]="src"
+      [rotation]="0"
+      [original-size]="false"
+      [show-all]="true"
+      [fit-to-page]="false"
+      [zoom]="1"
+      [zoom-scale]="'page-width'"
+      [stick-to-page]="false"
+      [render-text]="true"
+      [external-link-target]="'blank'"
+      [autoresize]="true"
+      [show-borders]="false"
+    ></pdf-viewer>
+  </div>
+</div>
